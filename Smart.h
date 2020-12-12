@@ -3,159 +3,155 @@
 #include <string>
 #include <list>
 
+using namespace std;
 class PhoneStore;
-
 class Smartphones {
 private:
-    std::string model;
-    std::string RAM;
-    std::string Price;
-    std::string Mob_num;
-    std::string Bat_cap;
-    std::string Core_num;
+    string smartphone_model;
+    string smartphone_RAM;
+    string smartphone_price;
+    string smartphone_mobile_number;
+    string smartphone_battery_capacity;
+    string smartphone_cores;
+
 public:
     friend PhoneStore;
-    Smartphones() {
-    }
 
-    Smartphones(std::string smart_model, std::string smart_RAM, std::string smart_price, std::string smart_MNUM, std::string smart_BCAP, std::string smart_CNUM) {
-        model = smart_model;
-        RAM = smart_RAM;
-        Price = smart_price;
-        Mob_num = smart_MNUM;
-        Bat_cap = smart_BCAP;
-        Core_num = smart_CNUM;
+    Smartphones(string smartphone_model, string smartphone_RAM, string smartphone_price, string smartphone_mobile_number, string smartphone_battery_capacity, string smartphone_cores) {
+        this->smartphone_model = smartphone_model;
+        this->smartphone_RAM = smartphone_RAM;
+        this->smartphone_price = smartphone_price;
+        this->smartphone_mobile_number = smartphone_mobile_number;
+        this->smartphone_battery_capacity = smartphone_battery_capacity;
+        this->smartphone_cores = smartphone_cores;
     }
-
 };
 
+class PhoneStore { 
 
-class PhoneStore {
 private:
-    std::string Smart[5][7];
+    string smartphone[5][7];
+
 public:
     friend Smartphones;
-    PhoneStore() {
+
+    void GetSmartphone(Smartphones &phone, int smartphone_number) {
+        smartphone[smartphone_number][0] = phone.smartphone_model;
+        smartphone[smartphone_number][1] = phone.smartphone_RAM;
+        smartphone[smartphone_number][2] = phone.smartphone_price;
+        smartphone[smartphone_number][3] = phone.smartphone_mobile_number;
+        smartphone[smartphone_number][4] = phone.smartphone_battery_capacity;
+        smartphone[smartphone_number][5] = phone.smartphone_cores;
     }
 
-    void get(Smartphones &smart, int num) {
-        Smart[num][0] = smart.model;
-        Smart[num][1] = smart.RAM;
-        Smart[num][2] = smart.Price;
-        Smart[num][3] = smart.Mob_num;
-        Smart[num][4] = smart.Bat_cap;
-        Smart[num][5] = smart.Core_num;
-    }
-
-    void get_best_phn_and_list() {
+    void GetBestPhoneAndListOfPhones() {
         float budget = 2000;
-        int temp_v;
-        int SmartR[5] = {0,0,0,0,0};
-        temp_v = std::stoi(Smart[0][1]);
-        //RAM
+        int temporary_value;
+        int smartphone_rating[5] = {0,0,0,0,0};
+        temporary_value = stoi(smartphone[0][1]);
         for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) < budget) {
-                if (std::stoi(Smart[i][1]) > temp_v) {
-                    temp_v = std::stoi(Smart[i][1]);
+            if (stoi(smartphone[i][2]) < budget) {
+                if (stoi(smartphone[i][1]) > temporary_value) {
+                    temporary_value = stoi(smartphone[i][1]);
                 }
             }
         }
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][1]) == temp_v) {
-                SmartR[i]++;
-            }
-        }
-        //Price
-        temp_v = budget;
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) <= budget) {
-                if (std::stoi(Smart[i][2]) < temp_v) {
-                    temp_v = std::stoi(Smart[i][2]);
-                }
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) == temp_v) {
-                SmartR[i]++;
-            }
-        }
-        //Battery cap
-        temp_v = std::stoi(Smart[0][4]);
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) <= budget) {
-                if (std::stoi(Smart[i][4]) > temp_v) {
-                    temp_v = std::stoi(Smart[i][4]);
-                }
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][4]) == temp_v) {
-                SmartR[i]++;
-            }
-        }
-        //Core num
-        temp_v = std::stoi(Smart[0][5]);
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) <= budget) {
-                if (std::stoi(Smart[i][5]) > temp_v) {
-                    temp_v = std::stoi(Smart[i][5]);
-                }
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][5]) == temp_v) {
-                SmartR[i]++;
-            }
-        }
-        //Best rating
-        int BestR = 0;
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) <= budget) {
-                if (SmartR[i] > BestR) {
-                    BestR = SmartR[i];
-                }
-            }
-        }
-        std::cout << "Бюджет: " << budget << "$" << std::endl << std::endl;
-        std::cout << "Смартфон(и) з найкращим рейтингом: " << std::endl;
-        for (int i = 0; i < 5; i++) {
-            if (std::stoi(Smart[i][2]) <= budget) {
-                if (SmartR[i] == BestR) {
-                    std::cout << Smart[i][0] << "   рейтинг: " << SmartR[i] << std::endl;
-                }
-            }
-        }
-        std::cout << std::endl;
 
-        std::list<float> phnlist;
-        int low_num = std::stoi(Smart[0][2]);
-        int temp_low = 0;
-        std::cout << "Лист вiд найдешевшого до найдорожчого: " << std::endl;
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][1]) == temporary_value) {
+                smartphone_rating[i]++;
+            }
+        }
+
+        temporary_value = budget;
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) <= budget) {
+                if (stoi(smartphone[i][2]) < temporary_value) {
+                    temporary_value = stoi(smartphone[i][2]);
+                }
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) == temporary_value) {
+                smartphone_rating[i]++;
+            }
+        }
+
+        temporary_value = stoi(smartphone[0][4]);
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) <= budget) {
+                if (stoi(smartphone[i][4]) > temporary_value) {
+                    temporary_value = stoi(smartphone[i][4]);
+                }
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][4]) == temporary_value) {
+                smartphone_rating[i]++;
+            }
+        }
+
+        temporary_value = stoi(smartphone[0][5]);
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) <= budget) {
+                if (stoi(smartphone[i][5]) > temporary_value) {
+                    temporary_value = stoi(smartphone[i][5]);
+                }
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][5]) == temporary_value) {
+                smartphone_rating[i]++;
+            }
+        }
+
+        int best_smartphone_rating = 0;
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) <= budget) {
+                if (smartphone_rating[i] > best_smartphone_rating) {
+                    best_smartphone_rating = smartphone_rating[i];
+                }
+            }
+        }
+
+        cout << "Budget: " << budget << "$" << endl << endl;
+        cout << "Smartphone(s) with best rating: " << endl;
+        for (int i = 0; i < 5; i++) {
+            if (stoi(smartphone[i][2]) <= budget) {
+                if (smartphone_rating[i] == best_smartphone_rating) {
+                    cout << smartphone[i][0] << "   rating: " << smartphone_rating[i] << endl;
+                }
+            }
+        }
+
+        cout << endl;
+        list<float> phone_list;
+        int lowest_price = stoi(smartphone[0][2]);
+        int temporary_lowest_price = 0;
+        cout << "List from lower to bigger price: " << endl;
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < 5; j++)
             {
-                if (std::stoi(Smart[j][2]) < low_num && std::stoi(Smart[j][2]) > temp_low) {
-                    low_num = std::stoi(Smart[j][2]);
+                if (stoi(smartphone[j][2]) < lowest_price && stoi(smartphone[j][2]) > temporary_lowest_price) {
+                    lowest_price = stoi(smartphone[j][2]);
                 }
             }
-            phnlist.push_back(low_num);
-            temp_low = low_num;
-            low_num = 9999;
+            phone_list.push_back(lowest_price);
+            temporary_lowest_price = lowest_price;
+            lowest_price = 9999;
         }
-        for (std::list<float>::iterator cost = phnlist.begin(); cost != phnlist.end(); ++cost)
+
+        for (list<float>::iterator cost = phone_list.begin(); cost != phone_list.end(); ++cost)
         {
             for (int k = 0; k < 5; k++) {
-                if (std::stoi(Smart[k][2]) == *cost) {
-                    std::cout << Smart[k][0] << "   " << *cost << " $ " << std::endl;
+                if (stoi(smartphone[k][2]) == *cost) {
+                    cout << smartphone[k][0] << "   " << *cost << " $ " << endl;
                 }
             }
         }
     };
 };
-
-
-
-
-
-
